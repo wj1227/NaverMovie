@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string name="app_name">NaverMovie</string>
+        <string name="auto_login_msg">login success</string>
+        <string name="login_id_empty">please in your id</string>
+        <string name="login_pw_empty">please in your pw</string>
+        <string name="login_user_fail">fail your id or pw</string>
+        <string name="search_emptyMovies">request movie emtpy</string>
+        <string name="search_network_error_msg">network error</string>
+        <string name="search_success">request response</string>
+        <string name="search_query_empty">please movie name</string>
+        <string name="hint_id">id = 1234</string>
+        <string name="hint_pw">pw = 1234</string>
+        <string name="btn_login">login</string>
+        <string name="hint_please_movie_name">please input movie name</string>
+        <string name="btn_search">search</string>
+</resources>
