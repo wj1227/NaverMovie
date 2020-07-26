@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">NaverMovie</string>
+    <string name="auto_login_msg">자동 로그인 성공</string>
+    <string name="login_id_empty">아이디를 입력해 주세요</string>
+    <string name="login_pw_empty">비밀번호를 입력해 주세요</string>
+    <string name="login_user_fail">아이디 또는 비밀번호를 확인해 주세요</string>
+    <string name="search_emptyMovies">요청한 영화정보가 존재하지 않습니다</string>
+    <string name="search_network_error_msg">네트워크 연결상태가 좋지 않습니다</string>
+    <string name="search_success">요청 결과를 불러왔습니다</string>
+    <string name="search_query_empty">영화제목을 입력해 주세요</string>
+    <string name="hint_id">아이디 = 1234</string>
+    <string name="hint_pw">패스워드 = 1234</string>
+    <string name="btn_login">로그인</string>
+    <string name="hint_please_movie_name">영화제목을 입력해 주세요.</string>
+    <string name="btn_search">검 색</string>
+</resources>
