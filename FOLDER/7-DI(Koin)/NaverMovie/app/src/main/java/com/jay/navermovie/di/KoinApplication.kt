@@ -1,6 +1,7 @@
 package com.jay.navermovie.di
 
 import android.app.Application
+import com.facebook.stetho.Stetho
 import com.jay.navermovie.module.*
 import org.koin.android.BuildConfig
 import org.koin.android.ext.koin.androidContext
@@ -12,6 +13,7 @@ class KoinApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Stetho.initializeWithDefaults(this)
 
         startKoin {
             androidLogger()
