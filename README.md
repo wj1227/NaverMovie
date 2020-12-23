@@ -15,4 +15,4 @@ Chapter6 - AAC (AAC ViewModel, Live Data) 추가
 
 Chapter7 - DI(Koin) 적용
 
-Chapter8 -
+Chapter8 - 대기 중 ~
