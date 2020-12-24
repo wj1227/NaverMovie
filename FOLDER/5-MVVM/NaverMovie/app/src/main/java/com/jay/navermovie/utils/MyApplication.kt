@@ -1,6 +1,7 @@
 package com.jay.navermovie.utils
 
 import android.app.Application
+import android.content.Context
 import com.jay.navermovie.api.NetworkService
 import com.jay.navermovie.data.search.source.MovieRepository
 import com.jay.navermovie.data.search.source.MovieRepositoryImpl
@@ -19,6 +20,17 @@ class MyApplication : Application() {
     private lateinit var movieLocalDataSource: MovieLocalDataSource
     private lateinit var movieDao: MovieDao
     lateinit var movieRepository: MovieRepository
+
+    companion object {
+        private lateinit var instance: MyApplication
+        fun applicationContext() : Context {
+            return instance.applicationContext
+        }
+    }
+
+    init {
+        instance = this
+    }
 
     override fun onCreate() {
         super.onCreate()

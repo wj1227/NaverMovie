@@ -5,6 +5,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import com.jay.navermovie.data.search.Movie
 import com.jay.navermovie.data.search.source.MovieRepository
+import com.jay.navermovie.utils.getString
 import retrofit2.HttpException
 
 class MovieSearchViewModel(private val movieRepository: MovieRepository) {
@@ -17,7 +18,7 @@ class MovieSearchViewModel(private val movieRepository: MovieRepository) {
 
 
     fun requestMovie() {
-        val query = query.get().toString().trim()
+        val query = query.getString()
 
         if (query.isEmpty()) {
             msg.set(MessageSet.EMPTY_QUERY)
