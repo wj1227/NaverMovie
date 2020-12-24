@@ -30,11 +30,7 @@ class LoginActivity : BaseActivity() {
 
     private fun inject() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
-        with(PreferenceManager(this)){
-            val loginLocalDataSource = LoginLocalDataSourceImpl(this)
-            val loginRepository = LoginRepositoryImpl(loginLocalDataSource)
-            viewModel = LoginViewModel(loginRepository)
-        }
+        viewModel = LoginViewModel()
         binding.vm = viewModel
     }
 
@@ -51,8 +47,15 @@ class LoginActivity : BaseActivity() {
         }
     }
 
-    private fun successLogin() =
-         MovieSearchActivity::class.java.startActivity(this)
+    private fun successLogin() {
+        with(PreferenceManager(this)){
+            val loginLocalDataSource = LoginLocalDataSourceImpl(this)
+            val loginRepository = LoginRepositoryImpl(loginLocalDataSource)
+            loginRepository.autoLogin = true
+        }
+        MovieSearchActivity::class.java.startActivity(this)
+    }
+
 
 
     private fun EditText.emptyError(){

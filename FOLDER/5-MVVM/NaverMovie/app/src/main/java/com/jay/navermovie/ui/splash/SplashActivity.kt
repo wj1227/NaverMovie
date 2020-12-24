@@ -3,9 +3,11 @@ package com.jay.navermovie.ui.splash
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.Observable
+import androidx.lifecycle.Observer
 import com.jay.navermovie.R
 import com.jay.navermovie.base.BaseActivity
 import com.jay.navermovie.data.login.source.LoginRepository
@@ -18,6 +20,7 @@ import com.jay.navermovie.utils.PreferenceManager
 
 class SplashActivity : BaseActivity() {
     private lateinit var viewModel: SplashViewModel
+    private val DELAY_TIME = 1500L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,33 +40,31 @@ class SplashActivity : BaseActivity() {
 
     private fun initViewModelCallback() {
         with(viewModel) {
-            goMovieSearch.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
-                override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-                    goMovieSearch()
-                }
-            })
-
-            goLogin.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
-                override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-                    goLogin()
+            splashStatus.observe(this@SplashActivity, Observer { status ->
+                when(status){
+                    is SplashStatus.LOGIN -> goLogin()
+                    is SplashStatus.MOVIE -> goMovieSearch()
                 }
             })
         }
     }
 
-    fun goLogin() {
-        Handler().postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        }, 1500L)
+    private fun goLogin() {
+        postDelay {
+            LoginActivity::class.java.startActivity(this)
+        }
     }
 
-    fun goMovieSearch() {
-        Handler().postDelayed({
-            showToast(getString(R.string.auto_login_msg))
-            startActivity(Intent(this, MovieSearchActivity::class.java))
-            finish()
-        }, 1500L)
+    private fun goMovieSearch() {
+        postDelay {
+            MovieSearchActivity::class.java.startActivity(this)
+        }
+    }
+
+    private fun postDelay(action : () -> Unit){
+        Handler(Looper.getMainLooper()).postDelayed({
+            action()
+        },DELAY_TIME)
     }
 
 }
