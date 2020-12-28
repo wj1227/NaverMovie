@@ -3,14 +3,13 @@ package com.jay.navermovie.ui.search
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.Observable
+import androidx.lifecycle.Observer
 import com.jay.navermovie.R
 import com.jay.navermovie.base.BaseActivity
-import com.jay.navermovie.data.search.Movie
 import com.jay.navermovie.databinding.ActivityMovieBinding
+import com.jay.navermovie.utils.Message
 import com.jay.navermovie.utils.MyApplication
 
 class MovieSearchActivity : BaseActivity() {
@@ -44,21 +43,17 @@ class MovieSearchActivity : BaseActivity() {
                 it.resolveActivity(packageManager) != null
             }?.run(this::startActivity)
         }
-
         binding.recyclerView.adapter = adapter
     }
 
     private fun initViewModelCallback() {
         with(viewModel) {
-            msg.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
-                override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-                    when (msg.get()) {
-                        MovieSearchViewModel.MessageSet.NETWORK_ERROR -> showToast(getString(R.string.search_network_error_msg))
-                        MovieSearchViewModel.MessageSet.SUCCESS -> showToast(getString(R.string.search_success))
-                        MovieSearchViewModel.MessageSet.EMPTY_RESULT -> showToast(getString(R.string.search_emptyMovies))
-                        MovieSearchViewModel.MessageSet.EMPTY_QUERY -> showToast(getString(R.string.search_query_empty))
-                    }
-                    msg.set(MovieSearchViewModel.MessageSet.BASIC)
+            movieStatus.observe(this@MovieSearchActivity, Observer {status ->
+                when(status){
+                    is MovieStatus.NetworkError -> Message.NETWORK_ERROR.message().showShortToast()
+                    is MovieStatus.Success -> Message.SUCESS.message().showShortToast()
+                    is MovieStatus.DataEmpty -> Message.EMPTY_RESULT.message().showShortToast()
+                    is MovieStatus.QueryEmpty -> Message.EMPTY_QUERY.message().showShortToast()
                 }
             })
         }

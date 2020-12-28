@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="property_changed_list">
+        <item>@string/search_network_error_msg</item>
+        <item>@string/search_success</item>
+        <item>@string/search_emptyMovies</item>
+        <item>@string/search_query_empty</item>
+    </string-array>
+</resources>

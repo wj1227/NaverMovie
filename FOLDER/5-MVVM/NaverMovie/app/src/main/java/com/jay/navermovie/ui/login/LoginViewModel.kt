@@ -2,41 +2,34 @@ package com.jay.navermovie.ui.login
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.jay.navermovie.base.BaseVieModel
 import com.jay.navermovie.data.login.source.LoginRepository
+import com.jay.navermovie.utils.USER_ID
+import com.jay.navermovie.utils.USER_PW
+import com.jay.navermovie.utils.getString
 
-class LoginViewModel(private val loginRepository: LoginRepository) {
-
+class LoginViewModel() : BaseVieModel<LoginStatus> {
     var id: ObservableField<String> = ObservableField("")
     var pw: ObservableField<String> = ObservableField("")
     var pb: ObservableBoolean = ObservableBoolean(false)
-    var isIdEmpty: ObservableField<Unit> = ObservableField()
-    var isPwEmpty: ObservableField<Unit> = ObservableField()
-    var loginErrorMsg: ObservableField<Unit> = ObservableField()
-    var loginSuccessMsg: ObservableField<Unit> = ObservableField()
+    private val status = MutableLiveData<LoginStatus>()
+    val loginStatus: LiveData<LoginStatus> get() = status
 
-    companion object {
-        private const val USER_ID = "1234"
-        private const val USER_PW = "1234"
-    }
+    private fun idPwCheck(id: String, pw: String): Boolean = id != USER_ID || pw != USER_PW
 
     fun onLoginClick() {
-        pb.set(true)
-        val id = id.get().toString().trim()
-        val pw = pw.get().toString().trim()
-
-        if (id.isEmpty()) {
-            pb.set(false)
-            isIdEmpty.notifyChange()
-        } else if (pw.isEmpty()) {
-            pb.set(false)
-            isPwEmpty.notifyChange()
-        } else if (id != USER_ID || pw != USER_PW) {
-            pb.set(false)
-            loginErrorMsg.notifyChange()
-        } else {
-            pb.set(false)
-            loginRepository.autoLogin = true
-            loginSuccessMsg.notifyChange()
+        val id = id.getString()
+        val pw = pw.getString()
+        when (true) {
+            id.isEmpty() -> LoginStatus.IdEmpty.updateStatus()
+            pw.isEmpty() -> LoginStatus.PwEmpty.updateStatus()
+            idPwCheck(id, pw) -> LoginStatus.LoginError.updateStatus()
+            else -> LoginStatus.LoginSuccess.updateStatus()
         }
     }
+
+    override fun LoginStatus.updateStatus() = status.postValue(this)
+
 }
