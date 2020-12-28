@@ -14,8 +14,8 @@ class LoginViewModel() : BaseVieModel<LoginStatus> {
     var id: ObservableField<String> = ObservableField("")
     var pw: ObservableField<String> = ObservableField("")
     var pb: ObservableBoolean = ObservableBoolean(false)
-    private val login = MutableLiveData<LoginStatus>()
-    val loginStatus: LiveData<LoginStatus> get() = login
+    private val status = MutableLiveData<LoginStatus>()
+    val loginStatus: LiveData<LoginStatus> get() = status
 
     private fun idPwCheck(id: String, pw: String): Boolean = id != USER_ID || pw != USER_PW
 
@@ -30,6 +30,6 @@ class LoginViewModel() : BaseVieModel<LoginStatus> {
         }
     }
 
-    override fun LoginStatus.updateStatus() = login.postValue(this)
+    override fun LoginStatus.updateStatus() = status.postValue(this)
 
 }

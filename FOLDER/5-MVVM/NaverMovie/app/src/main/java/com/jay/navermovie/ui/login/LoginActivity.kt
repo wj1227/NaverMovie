@@ -49,11 +49,9 @@ class LoginActivity : BaseActivity() {
 
     private fun successLogin() {
         with(PreferenceManager(this)){
-            val loginLocalDataSource = LoginLocalDataSourceImpl(this)
-            val loginRepository = LoginRepositoryImpl(loginLocalDataSource)
-            loginRepository.autoLogin = true
+            autoLogin = true
+            MovieSearchActivity::class.java.startActivity(this@LoginActivity)
         }
-        MovieSearchActivity::class.java.startActivity(this)
     }
 
 

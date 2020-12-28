@@ -32,10 +32,7 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun inject() {
-        val preferenceManager = PreferenceManager(this)
-        val loginLocalDataSource: LoginLocalDataSource = LoginLocalDataSourceImpl(preferenceManager)
-        val loginRepository: LoginRepository = LoginRepositoryImpl(loginLocalDataSource)
-        viewModel = SplashViewModel(loginRepository)
+        viewModel = SplashViewModel(PreferenceManager(this))
     }
 
     private fun initViewModelCallback() {
